@@ -8,6 +8,7 @@ using System.Linq;
 
 public class BallController : MonoBehaviour
 {
+    public int PLe;
     public float speed;
     private Rigidbody rb;
     public int count;
@@ -15,16 +16,23 @@ public class BallController : MonoBehaviour
     public string String;
 
     public Text countText;
+    public Text palindromeText;
+    public Text winText;
+
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         count = 0;
+        
         setCountText ();
-
+        setCountPalindrmeText ();
+        winText.text = "";
     }
 
-
+    //FixedUpdate run once, zero, or several times per frame,
+    //depending on how many physics frames per second 
+    //and how fast/slow the framerate.
     void FixedUpdate()
     {
         float moveHorizontal = Input.GetAxis("Horizontal");
@@ -53,13 +61,30 @@ public class BallController : MonoBehaviour
                 sphere.gameObject.SetActive(false);
                 count = count + 1;
                 setCountText ();
+                
             }
            
         }
     }
 
+    public void UpdatePL (int PL)
+    {
+        //WIN
+        PLe = PL;
+        Debug.Log("PLalidome number" + PLe);
+    }
+
     void setCountText ()
     {
-        countText.text = "Palindrome: " + count.ToString();
+        countText.text = "Palindrome Picked: " + count.ToString();
+        if (count == PLe)
+        {
+             
+            winText.text = "All Palindrome Picked: " + PLe.ToString();
+        }
+    }
+    void setCountPalindrmeText()
+    {
+        palindromeText.text = "Palindrome Generated: " + PLe.ToString();
     }
 }

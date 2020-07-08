@@ -7,24 +7,27 @@ using Random = UnityEngine.Random;
 using UnityEngine.UI;
 public class Spawner : MonoBehaviour
 {
+
+    private BallController bct;
+    private static int palindromeLength;
     //String Generation
     private string randomString;
-
     //String Length
     public int thestringlength;
     //Palindrome Length
-    private static int palindromeLength;
-
     //Colliders
     public Collider[] colliders;
-
     //Game Object
     public GameObject Cube;
     public GameObject Sphere;
-
     //Position for Game Object
     public float maxPos = 0f;
     public float minPos = 30f; 
+
+    void Awake()
+    {
+        bct = GameObject.FindObjectOfType<BallController>();
+    }
 
     //Spawning
     public void spawn()
@@ -62,7 +65,7 @@ public class Spawner : MonoBehaviour
             sphere.transform.position = new Vector3(theXPosition, 1.0f, theZPosition);
             cube.transform.position = theNewPos;
             name = GameObject.Find("Sphere" + i + "/Canvas/Text").GetComponent<Text>();
-            string[] characters = new string[] { "x", "i", "5" };
+            string[] characters = new string[] { "x", "a", "7" };
             thestringlength = Random.Range(9, 15);
             if (list.Contains(i))
             {
@@ -101,6 +104,8 @@ public class Spawner : MonoBehaviour
 
         palindromeLength = Random.Range(3, 10);
         Spawner.GetSetValue = palindromeLength;
+        // Debug.Log("Hello: " + palindromeLength);
+        bct.UpdatePL(palindromeLength);
         spawn();
     }
 }
